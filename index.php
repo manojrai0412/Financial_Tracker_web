@@ -4,8 +4,6 @@ require_once 'config/db.php';
 requireLogin();
 
 $uid = $_SESSION['user_id'];
-
-
 $income = $conn->prepare("SELECT COALESCE(SUM(amount),0) as total FROM transactions WHERE user_id=? AND type='income'");
 $income->execute([$uid]); $incomeTotal = $income->fetchColumn();
 
@@ -61,7 +59,6 @@ $catJson      = json_encode($categories);
 
     <?php flash(); ?>
 
-    
     <div class="stat-grid">
         <div class="stat-card blue">
             <div class="stat-label blue">Total Balance</div>
@@ -80,7 +77,6 @@ $catJson      = json_encode($categories);
             <div class="stat-value"><?= formatINR($savings) ?></div>
         </div>
     </div>
-
 
     <div class="chart-grid">
         <div class="chart-card">
@@ -137,7 +133,6 @@ $catJson      = json_encode($categories);
 </main>
 </div>
 
-
 <div class="modal-overlay" id="addTxModal">
     <div class="modal">
         <div class="modal-header">
@@ -176,7 +171,6 @@ $catJson      = json_encode($categories);
         </form>
     </div>
 </div>
-
 
 <div class="modal-overlay" id="editTxModal">
     <div class="modal">
@@ -217,7 +211,6 @@ $catJson      = json_encode($categories);
         </form>
     </div>
 </div>
-
 
 <form method="POST" action="actions/add_transaction.php" id="deleteTxForm" style="display:none;">
     <input type="hidden" name="action" value="delete">
