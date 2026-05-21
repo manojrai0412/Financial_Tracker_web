@@ -6,8 +6,6 @@ $uid = $_SESSION['user_id'];
 
 $year  = (int)($_GET['year']  ?? date('Y'));
 $month = $_GET['month'] ?? '';
-
-
 $where  = "WHERE user_id=?";
 $params = [$uid];
 if ($month) {
@@ -26,7 +24,6 @@ $expense->execute($params); $totalExpense = $expense->fetchColumn();
 
 $txStmt = $conn->prepare("SELECT * FROM transactions $where ORDER BY date DESC, id DESC");
 $txStmt->execute($params); $txs = $txStmt->fetchAll();
-
 
 $monthlySummary = [];
 if (!$month) {
