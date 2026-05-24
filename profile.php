@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = sanitize($_POST['email'] ?? '');
         if (!$name || !$email) redirect('profile.php','Name and email are required.','error');
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) redirect('profile.php','Invalid email.','error');
-        // Check email taken by another user
+
         $chk = $conn->prepare("SELECT id FROM users WHERE email=? AND id!=?");
         $chk->execute([$email, $uid]);
         if ($chk->fetch()) redirect('profile.php','Email already in use.','error');
@@ -43,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $user = $conn->prepare("SELECT * FROM users WHERE id=?");
 $user->execute([$uid]); $u = $user->fetch();
-
 $txCount = $conn->prepare("SELECT COUNT(*) FROM transactions WHERE user_id=?");
 $txCount->execute([$uid]); $txTotal = $txCount->fetchColumn();
 $joined = date('d M Y', strtotime($u['created_at']));
@@ -69,7 +68,7 @@ $joined = date('d M Y', strtotime($u['created_at']));
     <?php flash(); ?>
 
     <div style="display:grid;grid-template-columns:300px 1fr;gap:20px;">
-        <!-- Profile Card -->
+
         <div>
             <div class="card card-body-pad" style="text-align:center;">
                 <div style="width:80px;height:80px;background:linear-gradient(135deg,var(--accent-green),var(--accent-blue));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;font-family:'Syne',sans-serif;font-weight:700;color:#0d1117;">
@@ -85,9 +84,9 @@ $joined = date('d M Y', strtotime($u['created_at']));
             </div>
         </div>
 
-        <!-- Settings -->
+   
         <div style="display:flex;flex-direction:column;gap:16px;">
-            <!-- Edit Profile -->
+     
             <div class="card card-body-pad">
                 <h3 style="font-size:15px;font-weight:700;margin-bottom:18px;">Edit Profile</h3>
                 <form method="POST">
